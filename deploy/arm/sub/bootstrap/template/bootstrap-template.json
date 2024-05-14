@@ -1,0 +1,88 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "storageAccountName": {
+      "type": "string",
+      "metadata": {
+        "description": "Specifies the name of the Azure Storage account."
+      }
+    },
+    "containerNameTFState": {
+      "type": "string",
+      "defaultValue": "tfstate",
+      "metadata": {
+        "description": "Specifies the name of the blob container."
+      }
+    },
+    "resourceTags": {
+      "type": "object",
+      "defaultValue": {
+        "company": "REPLACE_ME",
+        "landing-zone": "REPLACE_ME",
+        "resource-scope": "REPLACE_ME",
+        "environment": "REPLACE_ME",
+        "component": "REPLACE_ME",
+        "repository": "REPLACE_ME",
+        "pipeline": "-"
+      }
+    }
+  },
+
+  "variables": {},
+
+  "resources": [
+    {
+      "type": "Microsoft.Authorization/locks",
+      "apiVersion": "2016-09-01",
+      "name": "resource-group-level",
+      "properties": {
+          "level": "CanNotDelete",
+          "notes": "Resource Group should not be deleted"
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2019-06-01",
+      "name": "[parameters('storageAccountName')]",
+      "location": "[resourceGroup().location]",
+      "tags": "[parameters('resourceTags')]",
+      "sku": {
+        "name": "Standard_LRS",
+        "tier": "Standard"
+      },
+      "kind": "StorageV2",
+      "properties": {
+        "accessTier": "Hot"
+      },
+      "resources": [
+        {
+          "type": "blobServices/containers",
+          "apiVersion": "2019-06-01",
+          "name": "[concat('default/', parameters('containerNameTFState'))]",
+          "dependsOn": [
+            "[parameters('storageAccountName')]"
+          ]
+        }
+      ]
+    }
+  ],
+  "outputs": {
+    "RESOURCE_GROUP_NAME":{
+      "value": "[resourceGroup().name]",
+      "type": "string"
+    },
+    "STORAGE_ACCOUNT_ID":{
+      "value": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
+      "type": "string"
+    },
+    "STORAGE_ACCOUNT_NAME":{
+      "value": "[parameters('storageAccountName')]",
+      "type": "string"
+    },
+    "STORAGE_CONTAINER":{
+      "value": "[parameters('containerNameTFState')]",
+      "type": "string"
+    }
+  }
+}

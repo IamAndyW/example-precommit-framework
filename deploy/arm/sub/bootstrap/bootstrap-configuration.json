@@ -1,0 +1,16 @@
+{
+    "tenantId": "REPLACE_ME",
+    "partnerId": "REPLACE_ME",
+    "subscriptions": [
+        {
+            "name": "REPLACE_ME",
+            "id": "REPLACE_ME",
+            "clientId": "REPLACE_ME",
+            "clientSecret": "REPLACE_ME",
+            "resourceGroupName": "REPLACE_ME",
+            "storageAccountName": "REPLACE_ME",
+            "location": "UKSouth",
+            "repository": "iamandyw/example-precommit-framework"
+        }
+    ]
+}

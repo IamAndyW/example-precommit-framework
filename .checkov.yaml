@@ -1,0 +1,49 @@
+# check:
+#   - MEDIUM
+compact: true
+directory:
+  - .
+download-external-modules: true
+evaluate-variables: true
+framework:
+  - all
+output: cli
+quiet: true
+skip-check:
+  # deploy\terraform\sub\core\infra\container_registry.tf
+  - CKV_AZURE_139
+  - CKV_AZURE_164
+  - CKV_AZURE_165
+  - CKV_AZURE_166
+  - CKV_AZURE_233
+  - CKV_AZURE_237
+  # deploy\terraform\modules\aws\vpc\main.tf
+  - CKV2_AWS_11
+  - CKV2_AWS_12
+skip-framework:
+  - bitbucket_pipelines
+  - argo_workflows
+  - arm
+  - bicep
+  - cloudformation
+  - dockerfile
+  - github_configuration
+  - github_actions
+  - gitlab_configuration
+  - gitlab_ci
+  - bitbucket_configuration
+  - helm
+  #- json
+  #- yaml
+  - kubernetes
+  - kustomize
+  - openapi
+  - sca_package
+  - sca_image
+  #- secrets
+  - serverless
+  #- terraform
+  - terraform_plan
+soft-fail: false
+skip-path:
+  - \.terraform/.*$

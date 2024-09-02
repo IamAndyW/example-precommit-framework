@@ -1,7 +1,7 @@
 version: 2
 updates:
   - package-ecosystem: "terraform"
-    directory: "/deploy/terraform"
+    directory: "/deploy/terraform/sub/core/infa"
     schedule:
       interval: "daily"
       timezone: "Europe/London"
